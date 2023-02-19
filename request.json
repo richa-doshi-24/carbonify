@@ -1,0 +1,12 @@
+curl -X POST https://sandbox.plaid.com/transactions/get \
+-H 'Content-Type: application/json' \
+-d '{
+  "client_id": "63f1579f7ba715001385cdd6",
+  "secret":"b24222c9ab7a2cb8830ddb3008227c",
+  "start_date": "2018-01-01",
+  "end_date": "2023-02-12",
+  "options": {
+    "count": 250,
+    "offset": 100
+  }
+}'

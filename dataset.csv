@@ -1,0 +1,13 @@
+Date,Category,Amount,Description,Destination
+2022-01-01,Food,25.50,Groceries,
+2022-01-03,Travel,150.00,Flight to New York,American Airlines
+2022-01-05,Clothing,75.00,Shoes,H&M
+2022-01-07,Energy Bill,80.00,Electricity bill,
+2022-01-09,Food,15.00,Lunch with friends,
+2022-01-12,Travel,45.00,Train ticket to Paris,
+2022-01-14,Clothing,40.00,T-shirt,H&M
+2022-01-17,Energy Bill,90.00,Gas bill,
+2022-01-20,Food,35.00,Dinner at a restaurant,
+2022-01-23,Travel,70.00,Taxi ride to the airport,Uber
+2022-01-25,Clothing,60.00,Pants,Zara
+2022-01-28,Energy Bill,100.00,Water bill,
