@@ -14,7 +14,8 @@ const itemSchema = new mongoose.Schema({
   Category: { type: String },
   Amount: { type: Number, required: true },
   Description: { type: String },
-  UserId: {type: String}
+  UserId: {type: String},
+  brand: {type: String}
 });
 
 // Define a model based on the schema
@@ -25,6 +26,13 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 // Routes
 app.get('/items', async (req, res) => {

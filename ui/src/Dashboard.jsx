@@ -1,10 +1,9 @@
 import React from 'react';
-
+import PieChart from './PieChart'
 function Dashboard() {
   return (
     <div>
-      <h1>Dashboard</h1>
-      <p>This is page 1!</p>
+      <PieChart/>
     </div>
   );
 }
