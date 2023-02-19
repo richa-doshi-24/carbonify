@@ -6,6 +6,7 @@ import Home from './Home';
 import Dashboard from './Dashboard';
 import LeaderBoard from './LeaderBoard';
 import Rewards from './Rewards';
+import MakePayment from './MakePayment';
 import Resources from './Resources';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/LeaderBoard" component={LeaderBoard} />
           <Route path="/Rewards" component={Rewards} />
+          <Route path="/makePayment" component={MakePayment} />
           <Route path="/Resources" component={Resources} />
         </Switch>
       </div>

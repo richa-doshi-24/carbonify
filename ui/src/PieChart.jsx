@@ -26,7 +26,12 @@ const PieChart = () => {
           type: 'pie',
         },
         title: {
-          text: 'My Pie Chart',
+          text: 'My Carbon Emissons',
+        },
+        tooltip: {
+          formatter: function () {
+            return (this.point.y).toFixed(2)+"%";
+          }
         },
         series: [
           {
@@ -62,7 +67,7 @@ const PieChart = () => {
     return (
       <div>
 
-        <div style={{top:90, left: 10, position: 'absolute', height: '600px'}}>
+        <div style={{top:200, left: 550, position: 'absolute', height: '600px'}}>
         <HighchartsReact highcharts={Highcharts} options={chartData} />
       </div>
       </div>

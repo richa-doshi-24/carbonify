@@ -17,8 +17,14 @@ const itemSchema = new mongoose.Schema({
   Company:{type: String},
   UserId: {type: String}
 });
+
 const sustainDataset = new Map();
-sustainDataset.set('Clothing', new Set(["Patagonia","Eileen Fisher","Reformation","Amour Vert","Outerknown","Everlane","Alternative Apparel","Stella McCartney","Thought Clothing","Nudie Jeans"]));
+
+// list of sustainable clothing brands
+sustainDataset.set('Clothing', new Set(["Patagonia","Eileen Fisher","Reformation",
+"Amour Vert","Outerknown","Everlane","Alternative Apparel","Stella McCartney","Thought Clothing","Nudie Jeans"]));
+
+// list of sustainable travel options
 sustainDataset.set('Travel', new Set(["MTA", "Citi Bike"]));
 sustainDataset.set('Energy', new Set([]));
 const avgEnergy = 914;
@@ -28,10 +34,7 @@ const indexFactor = {
   Travel: 1.5,
   Clothing: 5, 
   Energy: 2.5
-
 }
-
-
 
 // Define a model based on the schema
 const Item = mongoose.model('Item', itemSchema);
@@ -65,7 +68,18 @@ app.get('/items/:id', async (req, res) => {
 app.get('/score/:id', async(req, res)=>{
     const items = await Item.find({ UserId: req.params.id });
     const score = items.reduce((acc, value) => {
-      acc += value['Category'] != "Energy" ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : avgEnergy - (value['Amount']*10);
+      if(value['Category'] != "Energy") {
+        // sustainDataset.get(value['Category']).has(value['Company'])?10:-3
+        if (sustainDataset.has(value['Category'])) {
+          acc[value['Category']] += sustainDataset.get(value['Category']).has(value['Company']) ? 10 :- -3;
+        }
+        // else {
+        //   // handle the case where sustainDataset does not have an entry for value['Category']
+        // }
+      }else {
+        avgEnergy - (value['Amount']*10)
+      }
+      // acc += value['Category'] != "Energy" ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : avgEnergy - (value['Amount']*10);
       return acc;
     }, 0);
     res.json({score:Math.max(0, score)});
@@ -78,7 +92,15 @@ app.get('/categories/:id', async(req, res)=>{
     if (!acc[value['Category']]) {
       acc[value['Category']] = 0;
     }
-    acc[value['Category']] += (value['Category'] !== "Energy") ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : (avgEnergy - value['Amount']*10);
+    
+    if(value['Category'] != "Energy") {
+      if (sustainDataset.has(value['Category'])) {
+        acc[value['Category']] += sustainDataset.get(value['Category']).has(value['Company']) ? 10 : - -3;
+      }
+    }else {
+      avgEnergy - (value['Amount']*10)
+    }
+    // acc[value['Category']] += (value['Category'] !== "Energy") ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : (avgEnergy - value['Amount']*10);
     return acc;
   }, {});
   console.log(m)

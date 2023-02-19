@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 function MakePayment() {
   const [formData, setFormData] = useState({  });
-
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);

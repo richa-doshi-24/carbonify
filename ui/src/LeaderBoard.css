@@ -1,0 +1,34 @@
+.leaderboard-table {
+    width: 70%;
+    border-collapse: collapse;
+    margin-top: 140px;
+
+    margin-left: 200px;
+  }
+  
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+  
+  .leaderboard-table th {
+    text-transform: uppercase;
+    text-align : center;
+    letter-spacing: 0.1rem;
+    color:#ccc;
+  }
+  
+  .leaderboard-table tr:hover {
+    background-color: #082904;
+    color: #ccc;
+  }
+  
+  .leaderboard-table tr {
+    background-color: #205532;
+  }
+  
+  .leaderboard-table td:first-child {
+    font-weight: bold;
+    text-align: center;
+  }
