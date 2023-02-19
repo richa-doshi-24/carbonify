@@ -2,6 +2,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
+const msg = {
+  to: 'abidpatel6528@gmail.com', // Change to your recipient
+  from: 'aap9131@nyu.edu', // Change to your verified sender
+  subject: 'Sending with SendGrid is Fun',
+  text: 'and easy to do anywhere, even with Node.js',
+  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+}
+
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mymongo:hacknyu123@cluster0.e0zl3d5.mongodb.net/test', { useNewUrlParser: true })
   .then(() => console.log('MongoDB connected'))
@@ -45,6 +56,20 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+
+app.post('/sendEmail', () => {
+  console.log("Sending Email...");
+  sgMail
+    .send(msg)
+    .then((response) => {
+      console.log(response[0].statusCode)
+      console.log(response[0].headers)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+  console.log("Email sent!");
+})
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');

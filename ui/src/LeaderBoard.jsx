@@ -1,8 +1,19 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './LeaderBoard.css';
 // import image from "./green.png"; 
 
 function LeaderBoard() {
+
+
+  const [display, setDisplay] = useState(false);
+  const handleButtonClick = () => {
+    setDisplay(!display)
+    document.getElementById('iframeid').src += '';
+
+    fetch('http://localhost:3006/sendEmail', {
+      method: "POST"
+    })}
+
   const myStyle={
     // backgroundImage:`url('${image}')`,
     height:'100vh',
@@ -24,6 +35,36 @@ function LeaderBoard() {
   ];
   return (
     <div style={myStyle}>
+
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center'
+      }}>
+
+      <button style={{
+        background: '#30D5C8',
+        color: '#fff',
+        borderRadius: '4px',
+        border: 'none',
+        padding: '10px 20px',
+        marginTop: '150px',
+        marginLeft: '50px',
+        cursor: 'pointer'
+      }} onClick={handleButtonClick}>
+        Add Friend
+      </button></div>
+
+      <div style={{
+      display: 'flex',
+      justifyContent: 'center'
+      }}>
+
+      <div style={{ "display": display ? "" : "none", justifyContent: 'center' , marginTop: '10px'}} >
+          <iframe id="iframeid" title="abc" width="450px" height="450" src="https://cdn.forms-content.sg-form.com/5c9eec8a-b01f-11ed-92b2-2eff7b582329" />
+        </div>
+
+      </div>
+       
       <table className="leaderboard-table" 
             style={{  }}>
         <thead>
