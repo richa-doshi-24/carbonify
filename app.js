@@ -27,6 +27,7 @@ sustainDataset.set('Clothing', new Set(["Patagonia","Eileen Fisher","Reformation
 // list of sustainable travel options
 sustainDataset.set('Travel', new Set(["MTA", "Citi Bike"]));
 sustainDataset.set('Energy', new Set([]));
+sustainDataset.set('Fashion', new Set(["Patagonia","Eileen Fisher","Reformation","Amour Vert","Outerknown","Everlane","Alternative Apparel","Stella McCartney","Thought Clothing","Nudie Jeans"]));
 const avgEnergy = 914;
 //const clothingSet = new Set(["Patagonia","Eileen Fisher","Reformation","Amour Vert","Outerknown","Everlane","Alternative Apparel","Stella McCartney","Thought Clothing","Nudie Jeans"]);
 
