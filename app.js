@@ -69,18 +69,7 @@ app.get('/items/:id', async (req, res) => {
 app.get('/score/:id', async(req, res)=>{
     const items = await Item.find({ UserId: req.params.id });
     const score = items.reduce((acc, value) => {
-      if(value['Category'] != "Energy") {
-        // sustainDataset.get(value['Category']).has(value['Company'])?10:-3
-        if (sustainDataset.has(value['Category'])) {
-          acc[value['Category']] += sustainDataset.get(value['Category']).has(value['Company']) ? 10 :- -3;
-        }
-        // else {
-        //   // handle the case where sustainDataset does not have an entry for value['Category']
-        // }
-      }else {
-        avgEnergy - (value['Amount']*10)
-      }
-      // acc += value['Category'] != "Energy" ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : avgEnergy - (value['Amount']*10);
+      acc += value['Category'] != "Energy" ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : avgEnergy - (value['Amount']*10);
       return acc;
     }, 0);
     res.json({score:Math.max(0, score)});
@@ -93,15 +82,7 @@ app.get('/categories/:id', async(req, res)=>{
     if (!acc[value['Category']]) {
       acc[value['Category']] = 0;
     }
-    
-    if(value['Category'] != "Energy") {
-      if (sustainDataset.has(value['Category'])) {
-        acc[value['Category']] += sustainDataset.get(value['Category']).has(value['Company']) ? 10 : - -3;
-      }
-    }else {
-      avgEnergy - (value['Amount']*10)
-    }
-    // acc[value['Category']] += (value['Category'] !== "Energy") ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : (avgEnergy - value['Amount']*10);
+    acc[value['Category']] += (value['Category'] !== "Energy") ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : (avgEnergy - value['Amount']*10);
     return acc;
   }, {});
   console.log(m)
