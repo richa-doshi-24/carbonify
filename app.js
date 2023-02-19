@@ -14,9 +14,24 @@ const itemSchema = new mongoose.Schema({
   Category: { type: String },
   Amount: { type: Number, required: true },
   Description: { type: String },
-  UserId: {type: String},
-  brand: {type: String}
+  Company:{type: String},
+  UserId: {type: String}
 });
+const sustainDataset = new Map();
+sustainDataset.set('Clothing', new Set(["Patagonia","Eileen Fisher","Reformation","Amour Vert","Outerknown","Everlane","Alternative Apparel","Stella McCartney","Thought Clothing","Nudie Jeans"]));
+sustainDataset.set('Travel', new Set(["MTA", "Citi Bike"]));
+sustainDataset.set('Energy', new Set([]));
+const avgEnergy = 914;
+//const clothingSet = new Set(["Patagonia","Eileen Fisher","Reformation","Amour Vert","Outerknown","Everlane","Alternative Apparel","Stella McCartney","Thought Clothing","Nudie Jeans"]);
+
+const indexFactor = {
+  Travel: 1.5,
+  Clothing: 5, 
+  Energy: 2.5
+
+}
+
+
 
 // Define a model based on the schema
 const Item = mongoose.model('Item', itemSchema);
@@ -46,10 +61,36 @@ app.get('/items/:id', async (req, res) => {
   res.json(item);
 });
 
-app.get('score/:id', async(req, res)=>{
-    const items = await Item.find({ age: req.params.id });
+
+app.get('/score/:id', async(req, res)=>{
+    const items = await Item.find({ UserId: req.params.id });
+
 });
 
+app.get('/categories/:id', async(req, res)=>{
+  const items = await Item.find({ UserId: req.params.id });
+  console.log(items);
+  const m = items.reduce((acc, value) => {
+    if (!acc[value['Category']]) {
+      acc[value['Category']] = 0;
+    }
+    acc[value['Category']] += value['Category'] != "Energy" ? (sustainDataset.get(value['Category']).has(value['Company'])?10:-3) : avgEnergy - value['Amount']*10;
+    return acc;
+  }, {});
+  console.log(m)
+  const sum = Object.entries(m).reduce((a, b)=> {
+    if(b[1] > 0){
+      return a+b[1];
+    }
+    return a;
+  }, 0);
+  const result = Object.entries(m).map(val=>{
+    return {name: val[0],  y:Math.max(0,val[1]*100)/sum};
+  });
+  res.json(result);
+})
+//indexFactor[value['Category']]*value['Amount'];
+//(sustainDataset.get(value['Category']).has(value['Company'])?5:-3);
 app.post('/items', async (req, res) => {
   const item = new Item(req.body);
   try {
@@ -76,5 +117,5 @@ app.delete('/items/:id', async (req, res) => {
 
 // Start the server
 app.listen(3006, () => {
-  console.log('Server started on port 3000');
+  console.log('Server started on port 3006');
 });
