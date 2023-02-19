@@ -4,6 +4,7 @@ import React from 'react';
 function Home() {
   const myStyle={
             // backgroundImage:`url('${image}')`,
+            backgroundColor: '#30D5C8',
             height:'100vh',
             marginTop:'-70px',
             fontSize:'40px',
@@ -20,7 +21,8 @@ function Home() {
       <h1 style={{ 
             color: 'black',
             fontSize:'90px',
-            marginTop:'150px',
+            paddingTop: '100px',
+            // marginTop:'200px',
             textAlign: 'center',
             }}>Carbon Capture Hub </h1>
       <h5 style={{ 
